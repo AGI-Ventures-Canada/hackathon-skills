@@ -1,4 +1,4 @@
-# Oatmeal — Workflow Examples
+# Hackathon API — Workflow Examples
 
 Natural language commands mapped to API call sequences. Use these as patterns when interpreting user requests.
 
@@ -27,9 +27,9 @@ When a user says something like "Set up a hackathon called AI Builders this Satu
 
 ```bash
 # Compute dates from "this Saturday 9am-6pm" relative to today
-curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
+curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
   -H "Content-Type: application/json" \
-  "$OATMEAL_URL/api/dashboard/hackathons" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons" \
   -d '{
     "name": "AI Builders",
     "slug": "ai-builders",
@@ -50,9 +50,9 @@ for criteria in \
   '{"name":"Innovation","description":"How novel and creative is the solution?","maxScore":10,"weight":1.0,"displayOrder":1}' \
   '{"name":"Execution","description":"How well is the solution built and polished?","maxScore":10,"weight":1.0,"displayOrder":2}' \
   '{"name":"Design","description":"How good is the user experience and visual design?","maxScore":10,"weight":1.0,"displayOrder":3}'; do
-  curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
+  curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
     -H "Content-Type: application/json" \
-    "$OATMEAL_URL/api/dashboard/hackathons/$HACKATHON_ID/judging/criteria" \
+    "$HACKATHON_BASE_URL/api/dashboard/hackathons/$HACKATHON_ID/judging/criteria" \
     -d "$criteria" | jq .
 done
 ```
@@ -64,9 +64,9 @@ for prize in \
   '{"name":"First Place","description":"Grand prize","value":"$5,000","displayOrder":1}' \
   '{"name":"Second Place","description":"Runner up","value":"$2,500","displayOrder":2}' \
   '{"name":"Third Place","description":"Third place","value":"$1,000","displayOrder":3}'; do
-  curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
+  curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
     -H "Content-Type: application/json" \
-    "$OATMEAL_URL/api/dashboard/hackathons/$HACKATHON_ID/prizes" \
+    "$HACKATHON_BASE_URL/api/dashboard/hackathons/$HACKATHON_ID/prizes" \
     -d "$prize" | jq .
 done
 ```
@@ -74,9 +74,9 @@ done
 ### Step 4: Publish
 
 ```bash
-curl -s -X PATCH -H "Authorization: Bearer $OATMEAL_KEY" \
+curl -s -X PATCH -H "Authorization: Bearer $HACKATHON_API_KEY" \
   -H "Content-Type: application/json" \
-  "$OATMEAL_URL/api/dashboard/hackathons/$HACKATHON_ID/settings" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons/$HACKATHON_ID/settings" \
   -d '{"status": "published"}' | jq .
 ```
 
@@ -88,17 +88,17 @@ When a user says "Add these judges and set up judging: alice@co.com, bob@co.com,
 
 ```bash
 # List hackathons and identify the target
-HACKATHON_ID=$(curl -s -H "Authorization: Bearer $OATMEAL_KEY" \
-  "$OATMEAL_URL/api/dashboard/hackathons" | jq -r '.hackathons[0].id')
+HACKATHON_ID=$(curl -s -H "Authorization: Bearer $HACKATHON_API_KEY" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons" | jq -r '.hackathons[0].id')
 ```
 
 ### Step 2: Add Judges
 
 ```bash
 for email in alice@co.com bob@co.com charlie@co.com; do
-  curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
+  curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
     -H "Content-Type: application/json" \
-    "$OATMEAL_URL/api/dashboard/hackathons/$HACKATHON_ID/judging/judges" \
+    "$HACKATHON_BASE_URL/api/dashboard/hackathons/$HACKATHON_ID/judging/judges" \
     -d "{\"email\": \"$email\"}" | jq .
 done
 ```
@@ -106,17 +106,17 @@ done
 ### Step 3: Auto-Assign Submissions to Judges
 
 ```bash
-curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
+curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
   -H "Content-Type: application/json" \
-  "$OATMEAL_URL/api/dashboard/hackathons/$HACKATHON_ID/judging/auto-assign" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons/$HACKATHON_ID/judging/auto-assign" \
   -d '{"submissionsPerJudge": 5}' | jq .
 ```
 
 ### Step 4: Check Progress
 
 ```bash
-curl -s -H "Authorization: Bearer $OATMEAL_KEY" \
-  "$OATMEAL_URL/api/dashboard/hackathons/$HACKATHON_ID/judging/assignments" | jq .
+curl -s -H "Authorization: Bearer $HACKATHON_API_KEY" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons/$HACKATHON_ID/judging/assignments" | jq .
 ```
 
 ## End-to-End: Calculate and Publish Results
@@ -125,22 +125,22 @@ When a user says "close judging and announce winners":
 
 ```bash
 # Calculate rankings from submitted scores
-curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
-  "$OATMEAL_URL/api/dashboard/hackathons/$HACKATHON_ID/results/calculate" | jq .
+curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons/$HACKATHON_ID/results/calculate" | jq .
 
 # Review results before publishing
-curl -s -H "Authorization: Bearer $OATMEAL_KEY" \
-  "$OATMEAL_URL/api/dashboard/hackathons/$HACKATHON_ID/results" | jq .
+curl -s -H "Authorization: Bearer $HACKATHON_API_KEY" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons/$HACKATHON_ID/results" | jq .
 
 # Assign prizes to top submissions (get submission IDs from results)
-curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
+curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
   -H "Content-Type: application/json" \
-  "$OATMEAL_URL/api/dashboard/hackathons/$HACKATHON_ID/prizes/$FIRST_PRIZE_ID/assign" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons/$HACKATHON_ID/prizes/$FIRST_PRIZE_ID/assign" \
   -d '{"submissionId": "winner-submission-id"}' | jq .
 
 # Publish results (makes public, transitions hackathon to completed)
-curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
-  "$OATMEAL_URL/api/dashboard/hackathons/$HACKATHON_ID/results/publish" | jq .
+curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons/$HACKATHON_ID/results/publish" | jq .
 ```
 
 ## End-to-End: Import from Luma
@@ -149,15 +149,15 @@ When a user says "import my Luma event":
 
 ```bash
 # Extract event data from Luma
-LUMA_DATA=$(curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
+LUMA_DATA=$(curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
   -H "Content-Type: application/json" \
-  "$OATMEAL_URL/api/public/import/luma" \
+  "$HACKATHON_BASE_URL/api/public/import/luma" \
   -d '{"slug": "luma-event-slug"}' | jq .)
 
 # Create hackathon from Luma data
-curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
+curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
   -H "Content-Type: application/json" \
-  "$OATMEAL_URL/api/dashboard/import/luma" \
+  "$HACKATHON_BASE_URL/api/dashboard/import/luma" \
   -d "$LUMA_DATA" | jq .
 ```
 
@@ -170,9 +170,9 @@ for sponsor in \
   '{"name":"TechCorp","tier":"gold","websiteUrl":"https://techcorp.com"}' \
   '{"name":"StartupFund","tier":"silver","websiteUrl":"https://startupfund.com"}' \
   '{"name":"DevTools","tier":"bronze","websiteUrl":"https://devtools.com"}'; do
-  curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
+  curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
     -H "Content-Type: application/json" \
-    "$OATMEAL_URL/api/dashboard/hackathons/$HACKATHON_ID/sponsors" \
+    "$HACKATHON_BASE_URL/api/dashboard/hackathons/$HACKATHON_ID/sponsors" \
     -d "$sponsor" | jq .
 done
 ```
@@ -182,9 +182,9 @@ done
 When a user says "notify me when someone submits":
 
 ```bash
-curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
+curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
   -H "Content-Type: application/json" \
-  "$OATMEAL_URL/api/dashboard/webhooks" \
+  "$HACKATHON_BASE_URL/api/dashboard/webhooks" \
   -d '{
     "url": "https://your-webhook-endpoint.com/hook",
     "events": ["submission.submitted", "participant.registered"]
@@ -202,9 +202,9 @@ draft → published → registration_open → active → judging → completed �
 Each status change is done via:
 
 ```bash
-curl -s -X PATCH -H "Authorization: Bearer $OATMEAL_KEY" \
+curl -s -X PATCH -H "Authorization: Bearer $HACKATHON_API_KEY" \
   -H "Content-Type: application/json" \
-  "$OATMEAL_URL/api/dashboard/hackathons/$HACKATHON_ID/settings" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons/$HACKATHON_ID/settings" \
   -d '{"status": "TARGET_STATUS"}' | jq .
 ```
 

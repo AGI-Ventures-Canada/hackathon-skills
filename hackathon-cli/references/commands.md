@@ -1,4 +1,4 @@
-# Oatmeal CLI — Command Reference
+# Hackathon CLI — Command Reference
 
 Complete reference for all `hackathon` CLI commands. Source: `packages/cli/src/`.
 

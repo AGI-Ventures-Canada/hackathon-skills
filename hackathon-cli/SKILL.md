@@ -1,7 +1,7 @@
 ---
 name: hackathon-cli
 model: sonnet
-description: Use the Oatmeal CLI tool to manage hackathons from the terminal. Use when the user asks to create hackathons, add judges, manage prizes, or perform hackathon management tasks using the oatmeal command-line tool.
+description: Use the hackathon CLI tool to manage hackathons from the terminal. Use when the user asks to create hackathons, add judges, manage prizes, or perform hackathon management tasks using the hackathon command-line tool.
 activationKeywords:
   - "hackathon cli"
   - "hackathon command"
@@ -17,7 +17,7 @@ activationKeywords:
 
 # Hackathon CLI — Oatmeal Command-Line Tool
 
-Manage the Oatmeal hackathon platform from the terminal using the `oatmeal` CLI (`@agi-ventures-canada/hackathon-cli`). This skill guides AI agents through using the CLI to create hackathons, manage judges, set up prizes, and publish results.
+Manage the Oatmeal hackathon platform from the terminal using the `hackathon` CLI (`@agi-ventures-canada/hackathon-cli`). This skill guides AI agents through using the CLI to create hackathons, manage judges, set up prizes, and publish results.
 
 **For direct REST API access (curl commands, debugging endpoints), use the `hackathon-api` skill instead.**
 

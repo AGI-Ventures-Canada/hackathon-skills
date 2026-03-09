@@ -1,4 +1,4 @@
-# Oatmeal CLI — Workflow Examples
+# Hackathon CLI — Workflow Examples
 
 Natural language commands mapped to CLI command sequences.
 
@@ -145,7 +145,7 @@ hackathon prizes create $HACKATHON_ID --name "First Place" --value "$1,000"
 
 ## Local Development
 
-When working on the Oatmeal codebase, use `bun cli` instead of `oatmeal`:
+When working on the Oatmeal codebase, use `bun cli` instead of `hackathon`:
 
 ```bash
 # Start local server
