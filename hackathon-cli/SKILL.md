@@ -17,7 +17,7 @@ activationKeywords:
 
 # Hackathon CLI — Oatmeal Command-Line Tool
 
-Manage the Oatmeal hackathon platform from the terminal using the `oatmeal` CLI (`@oatmeal/cli`). This skill guides AI agents through using the CLI to create hackathons, manage judges, set up prizes, and publish results.
+Manage the Oatmeal hackathon platform from the terminal using the `oatmeal` CLI (`@agi-ventures-canada/hackathon-cli`). This skill guides AI agents through using the CLI to create hackathons, manage judges, set up prizes, and publish results.
 
 **For direct REST API access (curl commands, debugging endpoints), use the `hackathon-api` skill instead.**
 
@@ -47,9 +47,9 @@ Manage the Oatmeal hackathon platform from the terminal using the `oatmeal` CLI 
 ### Install the CLI
 
 ```bash
-npm install -g @oatmeal/cli
+npm install -g @agi-ventures-canada/hackathon-cli
 # or
-npx @oatmeal/cli
+npx @agi-ventures-canada/hackathon-cli
 ```
 
 Verify installation:
