@@ -3,12 +3,12 @@ name: hackathon-api
 model: sonnet
 description: Interact with the Oatmeal hackathon platform directly via its REST API using curl commands. Use when the user asks to make direct API calls, test endpoints, debug API responses, or integrate with the Oatmeal API programmatically without the CLI.
 activationKeywords:
-  - "oatmeal api"
+  - "hackathon api"
   - "hackathon api"
   - "curl hackathon"
   - "api endpoint"
   - "rest api hackathon"
-  - "api key oatmeal"
+  - "api key hackathon"
   - "test api"
   - "api call"
 ---
