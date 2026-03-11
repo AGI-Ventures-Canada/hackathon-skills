@@ -64,15 +64,15 @@ If this fails, the Oatmeal server is not running. The user needs to start it wit
 Store the API key and base URL as environment variables for all subsequent calls:
 
 ```bash
-export OATMEAL_URL="http://localhost:3000"
-export OATMEAL_KEY="sk_live_your_api_key_here"
+export HACKATHON_BASE_URL="http://localhost:3000"
+export HACKATHON_API_KEY="sk_live_your_api_key_here"
 ```
 
 Test authentication:
 
 ```bash
-curl -s -H "Authorization: Bearer $OATMEAL_KEY" \
-  "$OATMEAL_URL/api/v1/whoami" | jq .
+curl -s -H "Authorization: Bearer $HACKATHON_API_KEY" \
+  "$HACKATHON_BASE_URL/api/v1/whoami" | jq .
 ```
 
 If the user doesn't have an API key yet, they need to create one from the web dashboard (Settings > API Keys). API key creation requires a browser session and cannot be done via API.
@@ -80,8 +80,8 @@ If the user doesn't have an API key yet, they need to create one from the web da
 ### Step 3: Verify Organization
 
 ```bash
-curl -s -H "Authorization: Bearer $OATMEAL_KEY" \
-  "$OATMEAL_URL/api/dashboard/me" | jq .
+curl -s -H "Authorization: Bearer $HACKATHON_API_KEY" \
+  "$HACKATHON_BASE_URL/api/dashboard/me" | jq .
 ```
 
 This returns the current principal info including organization details.
@@ -97,9 +97,9 @@ When users say things like "make me a hackathon on Sunday from 7am to 9pm":
 3. **Configure settings** — `PATCH /api/dashboard/hackathons/:id/settings`
 
 ```bash
-curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
+curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
   -H "Content-Type: application/json" \
-  "$OATMEAL_URL/api/dashboard/hackathons" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons" \
   -d '{
     "name": "Sunday AI Hackathon",
     "slug": "sunday-ai-hackathon",
@@ -120,9 +120,9 @@ curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
 ### Update Hackathon Settings
 
 ```bash
-curl -s -X PATCH -H "Authorization: Bearer $OATMEAL_KEY" \
+curl -s -X PATCH -H "Authorization: Bearer $HACKATHON_API_KEY" \
   -H "Content-Type: application/json" \
-  "$OATMEAL_URL/api/dashboard/hackathons/{HACKATHON_ID}/settings" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons/{HACKATHON_ID}/settings" \
   -d '{
     "status": "published",
     "name": "Updated Name"
@@ -137,18 +137,18 @@ When users say "add this judge to my hackathon":
 
 ```bash
 # By email (sends invitation if user not found)
-curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
+curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
   -H "Content-Type: application/json" \
-  "$OATMEAL_URL/api/dashboard/hackathons/{HACKATHON_ID}/judging/judges" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons/{HACKATHON_ID}/judging/judges" \
   -d '{"email": "judge@example.com"}' | jq .
 ```
 
 ### Set Up Judging Criteria
 
 ```bash
-curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
+curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
   -H "Content-Type: application/json" \
-  "$OATMEAL_URL/api/dashboard/hackathons/{HACKATHON_ID}/judging/criteria" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons/{HACKATHON_ID}/judging/criteria" \
   -d '{
     "name": "Innovation",
     "description": "How novel and creative is the solution?",
@@ -161,9 +161,9 @@ curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
 ### Create a Prize
 
 ```bash
-curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
+curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
   -H "Content-Type: application/json" \
-  "$OATMEAL_URL/api/dashboard/hackathons/{HACKATHON_ID}/prizes" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons/{HACKATHON_ID}/prizes" \
   -d '{
     "name": "First Place",
     "description": "Grand prize for the winning team",
@@ -176,16 +176,16 @@ curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
 
 ```bash
 # Calculate rankings from scores
-curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
-  "$OATMEAL_URL/api/dashboard/hackathons/{HACKATHON_ID}/results/calculate" | jq .
+curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons/{HACKATHON_ID}/results/calculate" | jq .
 
 # Review results before publishing
-curl -s -H "Authorization: Bearer $OATMEAL_KEY" \
-  "$OATMEAL_URL/api/dashboard/hackathons/{HACKATHON_ID}/results" | jq .
+curl -s -H "Authorization: Bearer $HACKATHON_API_KEY" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons/{HACKATHON_ID}/results" | jq .
 
 # Publish results (makes them public, transitions to completed)
-curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
-  "$OATMEAL_URL/api/dashboard/hackathons/{HACKATHON_ID}/results/publish" | jq .
+curl -s -X POST -H "Authorization: Bearer $HACKATHON_API_KEY" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons/{HACKATHON_ID}/results/publish" | jq .
 ```
 
 ## Finding the Current Hackathon
@@ -193,8 +193,8 @@ curl -s -X POST -H "Authorization: Bearer $OATMEAL_KEY" \
 When a user says "my current hackathon" or "my hackathon", list their hackathons and pick the most recent active one:
 
 ```bash
-curl -s -H "Authorization: Bearer $OATMEAL_KEY" \
-  "$OATMEAL_URL/api/dashboard/hackathons" | jq .
+curl -s -H "Authorization: Bearer $HACKATHON_API_KEY" \
+  "$HACKATHON_BASE_URL/api/dashboard/hackathons" | jq .
 ```
 
 Look for the hackathon with the most recent `startsAt` date or `active`/`published` status. If ambiguous, ask the user which one they mean.
@@ -235,7 +235,7 @@ All API errors return JSON with a consistent shape:
 ```
 
 Common errors:
-- `401` — Missing or invalid API key. Check `$OATMEAL_KEY` is set correctly.
+- `401` — Missing or invalid API key. Check `$HACKATHON_API_KEY` is set correctly.
 - `403` — API key lacks required scope. User needs to create a new key with proper permissions.
 - `404` — Resource not found. Verify the hackathon ID exists.
 - `409` — Conflict (e.g., duplicate registration, slug already taken).

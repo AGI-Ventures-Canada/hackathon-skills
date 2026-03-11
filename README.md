@@ -1,4 +1,4 @@
-# Oatmeal Skills
+# Hackathon Skills
 
 AI agent skills for hackathon management on the [Oatmeal](https://github.com/AGI-Ventures-Canada/oatmeal) platform.
 
@@ -12,7 +12,7 @@ npx skills add AGI-Ventures-Canada/hackathon-skills
 
 | Skill | Description |
 |-------|-------------|
-| **hackathon-cli** | Manage hackathons from the terminal using the Oatmeal CLI |
+| **hackathon-cli** | Manage hackathons from the terminal using the `hackathon` CLI |
 | **hackathon-api** | Interact with the Oatmeal platform via its REST API using curl |
 | **hackathon-organizer** | Tips, tricks, and best practices for organizing hackathons |
 | **hackathon-attendee** | Tips, tricks, and best practices for hackathon participants |

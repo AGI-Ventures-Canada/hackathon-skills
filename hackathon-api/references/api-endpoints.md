@@ -1,4 +1,4 @@
-# Oatmeal API — Complete Endpoint Reference
+# Hackathon API — Complete Endpoint Reference
 
 All endpoints use JSON request/response bodies unless noted. Authentication via `Authorization: Bearer sk_live_...` header.
 
